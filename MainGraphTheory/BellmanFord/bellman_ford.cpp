@@ -43,6 +43,7 @@ dist_and_path bellmanFord(const int V, const int start, const vector<Edge>& edge
       int cost = edge.weight;
       if(dist[from] + cost < dist[to]){
         dist[to] = NEGATIVE_INF;
+        prev[to] = CANNOT_CALC;
       }
     }
   }
@@ -61,13 +62,13 @@ int main(){
         {0, 1, 2},
         {1, 2, -1},
         {0, 2, 8},
-        {2, 3, -10},
-        {3, 4, 8},
+        {2, 5, -10},
+        {5, 4, 8},
         {2, 4, 1},
-        {0, 5, 3},
-        {2, 5, 1},
+        {0, 3, 3},
+        {2, 3, 1},
         {4, 6, -7},
-        {6, 3, -2},
+        {6, 5, -2},
         {6, 7, 100}
     };
 
@@ -90,19 +91,24 @@ int main(){
 
   // getting path example using prev.
   // shortest path from start(0) to goal(3)
-  int goal = 5;
+  int goal = 3;
   cout << "shortest path from start(0) to goal(3) : " ;
-  vector<int> rpath;
-  int node = goal;
-  while(node != CANNOT_CALC){
-    rpath.emplace_back(node);
-    node = prev[node];
+  if(distances[goal] == NEGATIVE_INF){
+    cout << "The goal is in negative cycle. can't get path" << endl;
   }
+  else{
+    vector<int> rpath;
+    int node = goal;
+    while(node != CANNOT_CALC){
+      rpath.emplace_back(node);
+      node = prev[node];
+    }
 
-  for(int i=rpath.size()-1;i>=0;i--){
-    cout << rpath[i] << " ";
+    for(int i=rpath.size()-1;i>=0;i--){
+      cout << rpath[i] << " ";
+    }
+    cout << endl << endl;
   }
-  cout << endl << endl;
-
+  
   return 0;
 }
