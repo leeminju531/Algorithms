@@ -3,7 +3,7 @@
 
 using namespace std;
 
-typedef pair<vector<int>,vector<int>> dist_and_path;
+typedef pair<vector<int>,vector<int>> dist_and_prev;
 
 #define POSITIVE_INF INT16_MAX  
 #define NEGATIVE_INF INT16_MIN
@@ -16,7 +16,7 @@ struct Edge{
   int weight;
 };
 
-dist_and_path bellmanFord(const int V, const int start, const vector<Edge>& edges){
+dist_and_prev bellmanFord(const int V, const int start, const vector<Edge>& edges){
   vector<int> dist(V,POSITIVE_INF);
   dist[start] = 0;
   
@@ -48,7 +48,7 @@ dist_and_path bellmanFord(const int V, const int start, const vector<Edge>& edge
     }
   }
 
-  dist_and_path res;
+  dist_and_prev res;
   res.first = dist;
   res.second = prev;
   return res;
